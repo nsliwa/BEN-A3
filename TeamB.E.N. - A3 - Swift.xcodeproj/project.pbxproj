@@ -8,11 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		ADCAC23A1A9E7B810065FB9F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCAC2391A9E7B810065FB9F /* AppDelegate.swift */; };
-		ADCAC23C1A9E7B810065FB9F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCAC23B1A9E7B810065FB9F /* ViewController.swift */; };
 		ADCAC23F1A9E7B810065FB9F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADCAC23D1A9E7B810065FB9F /* Main.storyboard */; };
 		ADCAC2411A9E7B810065FB9F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADCAC2401A9E7B810065FB9F /* Images.xcassets */; };
 		ADCAC2441A9E7B810065FB9F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADCAC2421A9E7B810065FB9F /* LaunchScreen.xib */; };
 		ADCAC2501A9E7B810065FB9F /* TeamB_E_N____A3___SwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCAC24F1A9E7B810065FB9F /* TeamB_E_N____A3___SwiftTests.swift */; };
+		ADCAC25A1A9E7F890065FB9F /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCAC2591A9E7F890065FB9F /* MasterViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,13 +29,13 @@
 		ADCAC2341A9E7B810065FB9F /* TeamB.E.N. - A3 - Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TeamB.E.N. - A3 - Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADCAC2381A9E7B810065FB9F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ADCAC2391A9E7B810065FB9F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		ADCAC23B1A9E7B810065FB9F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		ADCAC23E1A9E7B810065FB9F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		ADCAC2401A9E7B810065FB9F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		ADCAC2431A9E7B810065FB9F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		ADCAC2491A9E7B810065FB9F /* TeamB.E.N. - A3 - SwiftTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TeamB.E.N. - A3 - SwiftTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADCAC24E1A9E7B810065FB9F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ADCAC24F1A9E7B810065FB9F /* TeamB_E_N____A3___SwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TeamB_E_N____A3___SwiftTests.swift"; sourceTree = "<group>"; };
+		ADCAC2591A9E7F890065FB9F /* MasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,12 +77,12 @@
 		ADCAC2361A9E7B810065FB9F /* TeamB.E.N. - A3 - Swift */ = {
 			isa = PBXGroup;
 			children = (
-				ADCAC2391A9E7B810065FB9F /* AppDelegate.swift */,
-				ADCAC23B1A9E7B810065FB9F /* ViewController.swift */,
-				ADCAC23D1A9E7B810065FB9F /* Main.storyboard */,
-				ADCAC2401A9E7B810065FB9F /* Images.xcassets */,
 				ADCAC2421A9E7B810065FB9F /* LaunchScreen.xib */,
+				ADCAC23D1A9E7B810065FB9F /* Main.storyboard */,
+				ADCAC2391A9E7B810065FB9F /* AppDelegate.swift */,
+				ADCAC2401A9E7B810065FB9F /* Images.xcassets */,
 				ADCAC2371A9E7B810065FB9F /* Supporting Files */,
+				ADCAC2591A9E7F890065FB9F /* MasterViewController.swift */,
 			);
 			path = "TeamB.E.N. - A3 - Swift";
 			sourceTree = "<group>";
@@ -212,7 +212,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ADCAC23C1A9E7B810065FB9F /* ViewController.swift in Sources */,
+				ADCAC25A1A9E7F890065FB9F /* MasterViewController.swift in Sources */,
 				ADCAC23A1A9E7B810065FB9F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
