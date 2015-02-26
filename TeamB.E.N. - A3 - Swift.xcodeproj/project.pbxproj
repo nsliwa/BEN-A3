@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		499917651A9EF2D1000EAB4B /* ModuleB_Game.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 499917641A9EF2D1000EAB4B /* ModuleB_Game.storyboard */; };
+		499917671A9EF39A000EAB4B /* GameController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499917661A9EF39A000EAB4B /* GameController.swift */; };
 		ADCAC23A1A9E7B810065FB9F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCAC2391A9E7B810065FB9F /* AppDelegate.swift */; };
 		ADCAC23F1A9E7B810065FB9F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADCAC23D1A9E7B810065FB9F /* Main.storyboard */; };
 		ADCAC2411A9E7B810065FB9F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADCAC2401A9E7B810065FB9F /* Images.xcassets */; };
@@ -26,6 +28,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		499917641A9EF2D1000EAB4B /* ModuleB_Game.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ModuleB_Game.storyboard; sourceTree = "<group>"; };
+		499917661A9EF39A000EAB4B /* GameController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameController.swift; sourceTree = "<group>"; };
 		ADCAC2341A9E7B810065FB9F /* TeamB.E.N. - A3 - Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TeamB.E.N. - A3 - Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADCAC2381A9E7B810065FB9F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ADCAC2391A9E7B810065FB9F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -83,6 +87,8 @@
 				ADCAC2401A9E7B810065FB9F /* Images.xcassets */,
 				ADCAC2371A9E7B810065FB9F /* Supporting Files */,
 				ADCAC2591A9E7F890065FB9F /* MasterViewController.swift */,
+				499917641A9EF2D1000EAB4B /* ModuleB_Game.storyboard */,
+				499917661A9EF39A000EAB4B /* GameController.swift */,
 			);
 			path = "TeamB.E.N. - A3 - Swift";
 			sourceTree = "<group>";
@@ -195,6 +201,7 @@
 				ADCAC23F1A9E7B810065FB9F /* Main.storyboard in Resources */,
 				ADCAC2441A9E7B810065FB9F /* LaunchScreen.xib in Resources */,
 				ADCAC2411A9E7B810065FB9F /* Images.xcassets in Resources */,
+				499917651A9EF2D1000EAB4B /* ModuleB_Game.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -213,6 +220,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				ADCAC25A1A9E7F890065FB9F /* MasterViewController.swift in Sources */,
+				499917671A9EF39A000EAB4B /* GameController.swift in Sources */,
 				ADCAC23A1A9E7B810065FB9F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
