@@ -8,8 +8,12 @@
 
 import CoreMotion
 import UIKit
+import SceneKit
+import QuartzCore
 
-class GameController: UIViewController {
+class GameViewController: UIViewController {
+    
+    @IBOutlet weak var scnView : SCNView!
     
     let activityManager = CMMotionActivityManager()
     let customQueue = NSOperationQueue()
@@ -27,11 +31,27 @@ class GameController: UIViewController {
         }
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        setupWorld()
+    }
+    
     override func viewWillDisappear(animated: Bool) {
         if CMMotionActivityManager.isActivityAvailable() {
             self.activityManager.stopActivityUpdates()
         }
         super.viewWillDisappear(animated)
+    }
+    
+    func setupWorld() {
+        let scene = SCNScene()
+        
+        let boxGeometry = SCNBox(width: 10.0, height: 10.0, length: 10.0, chamferRadius: 1.0)
+        let boxNode = SCNNode(geometry: boxGeometry)
+        scene.rootNode.addChildNode(boxNode)
+        
+        scnView.scene = scene
     }
 
 }

@@ -4,10 +4,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
-        <!--Game Controller-->
+        <!--Game View Controller-->
         <scene sceneID="Igr-Yf-9Ok">
             <objects>
-                <viewController id="adw-cM-sk5" customClass="GameController" sceneMemberID="viewController">
+                <viewController id="adw-cM-sk5" customClass="GameViewController" customModule="TeamB_E_N____A3___Swift" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hd9-dg-Nhc"/>
                         <viewControllerLayoutGuide type="bottom" id="Jwg-n2-SWY"/>
@@ -15,6 +15,12 @@
                     <view key="view" contentMode="scaleToFill" id="DWw-K8-XdT">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ytQ-eJ-UZo">
+                                <rect key="frame" x="-8" y="-109" width="608" height="709"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </sceneKitView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                 </viewController>
