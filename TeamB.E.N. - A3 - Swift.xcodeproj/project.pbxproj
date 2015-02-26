@@ -407,6 +407,7 @@
 				ADCAC2551A9E7B810065FB9F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		ADCAC2561A9E7B810065FB9F /* Build configuration list for PBXNativeTarget "TeamB.E.N. - A3 - SwiftTests" */ = {
 			isa = XCConfigurationList;
@@ -415,6 +416,7 @@
 				ADCAC2581A9E7B810065FB9F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
