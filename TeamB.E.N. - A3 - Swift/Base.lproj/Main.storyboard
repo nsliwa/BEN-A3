@@ -169,10 +169,10 @@
             </objects>
             <point key="canvasLocation" x="114" y="134"/>
         </scene>
-        <!--View Controller-->
+        <!--Goal View Controller-->
         <scene sceneID="vNB-PK-mQp">
             <objects>
-                <viewController id="fZ5-26-pV8" sceneMemberID="viewController">
+                <viewController id="fZ5-26-pV8" customClass="GoalViewController" customModule="TeamB_E_N____A3___Swift" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Rmn-VZ-HWl"/>
                         <viewControllerLayoutGuide type="bottom" id="Nzl-B6-NiR"/>
@@ -180,9 +180,35 @@
                     <view key="view" contentMode="scaleToFill" id="bEi-Tb-wEz">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="0aD-hs-0mE">
+                                <rect key="frame" x="52" y="269" width="220" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="220" id="Q9x-Op-8RT"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="go" enablesReturnKeyAutomatically="YES"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Set your goal number of steps here!" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QZT-ze-Cyg">
+                                <rect key="frame" x="23" y="128" width="275" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerY" secondItem="0aD-hs-0mE" secondAttribute="centerY" id="EpL-qM-bHs"/>
+                            <constraint firstItem="QZT-ze-Cyg" firstAttribute="top" secondItem="Rmn-VZ-HWl" secondAttribute="bottom" constant="64" id="ISu-7w-nvv"/>
+                            <constraint firstItem="QZT-ze-Cyg" firstAttribute="centerX" secondItem="0aD-hs-0mE" secondAttribute="centerX" constant="-2" id="LaB-Iy-FSm"/>
+                            <constraint firstItem="QZT-ze-Cyg" firstAttribute="centerX" secondItem="bEi-Tb-wEz" secondAttribute="centerX" id="MsT-bh-ls6"/>
+                            <constraint firstAttribute="centerX" secondItem="0aD-hs-0mE" secondAttribute="centerX" constant="-2" id="med-rL-FJK"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="UDB-ez-gzf"/>
+                    <connections>
+                        <outlet property="goal_field" destination="0aD-hs-0mE" id="330-kb-CKp"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IaY-0W-c1f" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

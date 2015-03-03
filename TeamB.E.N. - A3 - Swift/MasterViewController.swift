@@ -44,25 +44,26 @@ class MasterViewController: UIViewController {
         let startOfYesterday = cal.dateBySettingHour(0, minute: 0, second: 0, ofDate: nowMinusOneDay!, options: nil)
         let endOfYesterday = cal.dateBySettingHour(23, minute: 59, second: 59, ofDate: nowMinusOneDay!, options: nil)
         
-        
-        print(startOfYesterday)
-        print(endOfYesterday)
-        
         if CMMotionActivityManager.isActivityAvailable(){
             self.activityManager.startActivityUpdatesToQueue( self.customQueue)
                 { (activity:CMMotionActivity!) -> Void in
                     
                     // parse out activity
                     var activityTxt = ""
+                    var imageTxt = "still"
                     
                     if(activity.walking){
                         activityTxt = "Walking"
+                        imageTxt = "walking"
                     } else if (activity.stationary) {
                         activityTxt = "You are doing nothing. Stop That!"
+                        imageTxt = "still"
                     } else if (activity.cycling){
                         activityTxt = "Cycling"
+                        imageTxt = "cycling"
                     } else if (activity.automotive) {
                         activityTxt = "You are in a car. Lazy."
+                        imageTxt = "car"
                     }
                     
                     
@@ -70,6 +71,7 @@ class MasterViewController: UIViewController {
                     {
                             
                             self.label_activity.text = activityTxt
+                            self.image_activity.image = UIImage(named: imageTxt)
 
                     }
             }
