@@ -55,11 +55,19 @@ class MasterViewController: UIViewController {
                     // parse out activity
                     var activityTxt = ""
                     
-                    activity.description
+                    if(activity.walking){
+                        activityTxt = "Walking"
+                    } else if (activity.stationary) {
+                        activityTxt = "You are doing nothing. Stop That!"
+                    } else if (activity.cycling){
+                        activityTxt = "Cycling"
+                    } else if (activity.automotive) {
+                        activityTxt = "You are in a car. Lazy."
+                    }
                     
                     
                     dispatch_async(dispatch_get_main_queue())
-                        {
+                    {
                             
                             self.label_activity.text = activityTxt
 

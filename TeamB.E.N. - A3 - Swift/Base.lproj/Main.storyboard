@@ -81,12 +81,6 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="label_activity" text="None" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JgZ-4F-ito">
-                                <rect key="frame" x="181" y="231" width="103" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" restorationIdentifier="button_reward" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JTG-vc-9xF">
                                 <rect key="frame" x="137" y="325" width="53" height="30"/>
                                 <state key="normal" title="Reward">
@@ -96,6 +90,12 @@
                                     <action selector="onRewardButtonClick:" destination="7eT-Iq-Bm5" eventType="touchUpInside" id="6vZ-RC-etB"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" restorationIdentifier="label_activity" text="None" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JgZ-4F-ito">
+                                <rect key="frame" x="181" y="231" width="123" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -121,10 +121,10 @@
                             <constraint firstItem="6Bx-H3-GA2" firstAttribute="leading" secondItem="tfT-tb-ExB" secondAttribute="trailing" constant="41" id="URb-DI-9fO"/>
                             <constraint firstItem="rPL-2B-KCD" firstAttribute="top" secondItem="u4C-fF-xx7" secondAttribute="bottom" constant="17" id="UbN-wF-YK0"/>
                             <constraint firstItem="6Bx-H3-GA2" firstAttribute="leading" secondItem="CFo-fs-baD" secondAttribute="leading" id="W05-xs-YAu"/>
-                            <constraint firstItem="TZX-8R-jgi" firstAttribute="trailing" secondItem="JgZ-4F-ito" secondAttribute="trailing" id="ZHQ-yL-fby"/>
-                            <constraint firstItem="JTG-vc-9xF" firstAttribute="top" secondItem="JgZ-4F-ito" secondAttribute="bottom" constant="73" id="ZPK-oB-YZL"/>
+                            <constraint firstItem="TZX-8R-jgi" firstAttribute="trailing" secondItem="JgZ-4F-ito" secondAttribute="trailing" constant="-20" id="ZHQ-yL-fby"/>
+                            <constraint firstItem="JTG-vc-9xF" firstAttribute="top" secondItem="JgZ-4F-ito" secondAttribute="bottom" constant="58" id="ZPK-oB-YZL"/>
                             <constraint firstItem="u4C-fF-xx7" firstAttribute="leading" secondItem="rPL-2B-KCD" secondAttribute="leading" id="iXc-tj-3j1"/>
-                            <constraint firstItem="pxb-Z1-zcz" firstAttribute="baseline" secondItem="JgZ-4F-ito" secondAttribute="baseline" id="kKK-4c-AjL"/>
+                            <constraint firstItem="pxb-Z1-zcz" firstAttribute="baseline" secondItem="JgZ-4F-ito" secondAttribute="baseline" constant="-15" id="kKK-4c-AjL"/>
                             <constraint firstItem="YgF-uy-Evu" firstAttribute="top" secondItem="p9A-KX-I9U" secondAttribute="bottom" constant="27" id="lM9-IN-8Ji"/>
                             <constraint firstItem="6Bx-H3-GA2" firstAttribute="baseline" secondItem="tfT-tb-ExB" secondAttribute="baseline" id="nGj-rn-gab"/>
                             <constraint firstItem="p9A-KX-I9U" firstAttribute="leading" secondItem="u4C-fF-xx7" secondAttribute="trailing" constant="18" id="nUG-Sy-fpa"/>
