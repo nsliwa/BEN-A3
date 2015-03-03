@@ -7,12 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-
-		AD7EDB681AA60FBD00F87BA7 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD7EDB671AA60FBD00F87BA7 /* CoreMotion.framework */; };
-
 		499917651A9EF2D1000EAB4B /* ModuleB_Game.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 499917641A9EF2D1000EAB4B /* ModuleB_Game.storyboard */; };
 		499917671A9EF39A000EAB4B /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 499917661A9EF39A000EAB4B /* GameViewController.swift */; };
-
+		AD7EDB681AA60FBD00F87BA7 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD7EDB671AA60FBD00F87BA7 /* CoreMotion.framework */; };
 		ADCAC23A1A9E7B810065FB9F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCAC2391A9E7B810065FB9F /* AppDelegate.swift */; };
 		ADCAC23F1A9E7B810065FB9F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADCAC23D1A9E7B810065FB9F /* Main.storyboard */; };
 		ADCAC2411A9E7B810065FB9F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADCAC2401A9E7B810065FB9F /* Images.xcassets */; };
@@ -33,12 +30,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-
-		AD7EDB671AA60FBD00F87BA7 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
-
 		499917641A9EF2D1000EAB4B /* ModuleB_Game.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = ModuleB_Game.storyboard; sourceTree = "<group>"; };
 		499917661A9EF39A000EAB4B /* GameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
-
+		AD7EDB671AA60FBD00F87BA7 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		ADCAC2341A9E7B810065FB9F /* TeamB.E.N. - A3 - Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TeamB.E.N. - A3 - Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADCAC2381A9E7B810065FB9F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ADCAC2391A9E7B810065FB9F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -99,12 +93,9 @@
 				ADCAC2401A9E7B810065FB9F /* Images.xcassets */,
 				ADCAC2371A9E7B810065FB9F /* Supporting Files */,
 				ADCAC2591A9E7F890065FB9F /* MasterViewController.swift */,
-
 				ADCAC25B1A9EAA2E0065FB9F /* GoalViewController.swift */,
-
 				499917641A9EF2D1000EAB4B /* ModuleB_Game.storyboard */,
 				499917661A9EF39A000EAB4B /* GameViewController.swift */,
-
 			);
 			path = "TeamB.E.N. - A3 - Swift";
 			sourceTree = "<group>";
@@ -183,6 +174,7 @@
 				TargetAttributes = {
 					ADCAC2331A9E7B810065FB9F = {
 						CreatedOnToolsVersion = 6.1.1;
+						DevelopmentTeam = APD62CDC25;
 					};
 					ADCAC2481A9E7B810065FB9F = {
 						CreatedOnToolsVersion = 6.1.1;

@@ -29,20 +29,40 @@ class MasterViewController: UIViewController {
     let customQueue = NSOperationQueue()
     let pedometer = CMPedometer()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        //Date and calendar objs
+        let cal = NSCalendar.currentCalendar()
+        let now = NSDate()
+        
+        let minusOneDay = NSDateComponents()
+        minusOneDay.day = -1
+        let nowMinusOneDay = cal.dateByAddingComponents(minusOneDay, toDate: now, options: nil)
+        
+        let startOfYesterday = cal.dateBySettingHour(0, minute: 0, second: 0, ofDate: nowMinusOneDay!, options: nil)
+        let endOfYesterday = cal.dateBySettingHour(23, minute: 59, second: 59, ofDate: nowMinusOneDay!, options: nil)
+        
+        
+        print(startOfYesterday)
+        print(endOfYesterday)
+        
         if CMMotionActivityManager.isActivityAvailable(){
             self.activityManager.startActivityUpdatesToQueue( self.customQueue)
                 { (activity:CMMotionActivity!) -> Void in
                     
                     // parse out activity
-                    var activity = ""
+                    var activityTxt = ""
+                    
+                    activity.description
                     
                     
                     dispatch_async(dispatch_get_main_queue())
                         {
-                            self.label_activity.text = activity.description
+                            
+                            self.label_activity.text = activityTxt
+
                     }
             }
         }
@@ -52,7 +72,15 @@ class MasterViewController: UIViewController {
                 
                 dispatch_async(dispatch_get_main_queue())
                     {
-                        self.label_today.text = pedData.description
+                        self.label_today.text = pedData.numberOfSteps.stringValue + " steps"
+                }
+            }
+            
+            self.pedometer.queryPedometerDataFromDate(startOfYesterday, toDate: endOfYesterday) { (pedData: CMPedometerData!, error: NSError!) -> Void in
+                
+                dispatch_async(dispatch_get_main_queue())
+                    {
+                        self.label_yesterday.text = pedData.numberOfSteps.stringValue + " steps"
                 }
             }
         }
