@@ -7,12 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AD7EDB681AA60FBD00F87BA7 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD7EDB671AA60FBD00F87BA7 /* CoreMotion.framework */; };
 		ADCAC23A1A9E7B810065FB9F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCAC2391A9E7B810065FB9F /* AppDelegate.swift */; };
 		ADCAC23F1A9E7B810065FB9F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ADCAC23D1A9E7B810065FB9F /* Main.storyboard */; };
 		ADCAC2411A9E7B810065FB9F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ADCAC2401A9E7B810065FB9F /* Images.xcassets */; };
 		ADCAC2441A9E7B810065FB9F /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = ADCAC2421A9E7B810065FB9F /* LaunchScreen.xib */; };
 		ADCAC2501A9E7B810065FB9F /* TeamB_E_N____A3___SwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCAC24F1A9E7B810065FB9F /* TeamB_E_N____A3___SwiftTests.swift */; };
 		ADCAC25A1A9E7F890065FB9F /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCAC2591A9E7F890065FB9F /* MasterViewController.swift */; };
+		ADCAC25C1A9EAA2E0065FB9F /* GoalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ADCAC25B1A9EAA2E0065FB9F /* GoalViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,6 +28,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		AD7EDB671AA60FBD00F87BA7 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		ADCAC2341A9E7B810065FB9F /* TeamB.E.N. - A3 - Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TeamB.E.N. - A3 - Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ADCAC2381A9E7B810065FB9F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ADCAC2391A9E7B810065FB9F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -36,6 +39,7 @@
 		ADCAC24E1A9E7B810065FB9F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ADCAC24F1A9E7B810065FB9F /* TeamB_E_N____A3___SwiftTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TeamB_E_N____A3___SwiftTests.swift"; sourceTree = "<group>"; };
 		ADCAC2591A9E7F890065FB9F /* MasterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
+		ADCAC25B1A9EAA2E0065FB9F /* GoalViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GoalViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD7EDB681AA60FBD00F87BA7 /* CoreMotion.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,6 +64,7 @@
 		ADCAC22B1A9E7B810065FB9F = {
 			isa = PBXGroup;
 			children = (
+				AD7EDB671AA60FBD00F87BA7 /* CoreMotion.framework */,
 				ADCAC2361A9E7B810065FB9F /* TeamB.E.N. - A3 - Swift */,
 				ADCAC24C1A9E7B810065FB9F /* TeamB.E.N. - A3 - SwiftTests */,
 				ADCAC2351A9E7B810065FB9F /* Products */,
@@ -83,6 +89,7 @@
 				ADCAC2401A9E7B810065FB9F /* Images.xcassets */,
 				ADCAC2371A9E7B810065FB9F /* Supporting Files */,
 				ADCAC2591A9E7F890065FB9F /* MasterViewController.swift */,
+				ADCAC25B1A9EAA2E0065FB9F /* GoalViewController.swift */,
 			);
 			path = "TeamB.E.N. - A3 - Swift";
 			sourceTree = "<group>";
@@ -212,6 +219,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ADCAC25C1A9EAA2E0065FB9F /* GoalViewController.swift in Sources */,
 				ADCAC25A1A9E7F890065FB9F /* MasterViewController.swift in Sources */,
 				ADCAC23A1A9E7B810065FB9F /* AppDelegate.swift in Sources */,
 			);
@@ -338,6 +346,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "TeamB.E.N. - A3 - Swift/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -348,6 +357,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = "TeamB.E.N. - A3 - Swift/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";

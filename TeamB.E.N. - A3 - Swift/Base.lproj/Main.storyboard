@@ -36,7 +36,7 @@
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" restorationIdentifier="progress_yesterday" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="YgF-uy-Evu">
                                 <rect key="frame" x="84" y="133" width="200" height="2"/>
                             </progressView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="image_yesterday" image="steps2" translatesAutoresizingMaskIntoConstraints="NO" id="u4C-fF-xx7">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="image_yesterday" image="steps" translatesAutoresizingMaskIntoConstraints="NO" id="u4C-fF-xx7">
                                 <rect key="frame" x="16" y="85" width="50" height="50"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Yesterday:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p9A-KX-I9U">
@@ -54,10 +54,10 @@
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" restorationIdentifier="progress_today" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="TZX-8R-jgi">
                                 <rect key="frame" x="84" y="200" width="200" height="2"/>
                             </progressView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="image_today" image="steps2" translatesAutoresizingMaskIntoConstraints="NO" id="rPL-2B-KCD">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="image_today" image="steps" translatesAutoresizingMaskIntoConstraints="NO" id="rPL-2B-KCD">
                                 <rect key="frame" x="16" y="152" width="50" height="50"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="image_activity" image="still2" translatesAutoresizingMaskIntoConstraints="NO" id="KaU-lL-dig">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="image_activity" image="still" translatesAutoresizingMaskIntoConstraints="NO" id="KaU-lL-dig">
                                 <rect key="frame" x="16" y="217" width="50" height="50"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Today: " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tfT-tb-ExB">
@@ -92,6 +92,9 @@
                                 <state key="normal" title="Reward">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="onRewardButtonClick:" destination="7eT-Iq-Bm5" eventType="touchUpInside" id="6vZ-RC-etB"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -141,18 +144,54 @@
                                 <state key="normal" title="Goals">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="onGoalButtonClick:" destination="7eT-Iq-Bm5" eventType="touchUpInside" id="Z6o-iT-7ls"/>
+                                    <segue destination="fZ5-26-pV8" kind="push" id="5st-PX-Fvc"/>
+                                </connections>
                             </button>
+                            <connections>
+                                <action selector="onGoalButtonClick:" destination="7eT-Iq-Bm5" id="e52-N1-GBa"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="image_activity" destination="KaU-lL-dig" id="P2w-GL-UaS"/>
+                        <outlet property="image_today" destination="rPL-2B-KCD" id="u3e-Xe-ORl"/>
+                        <outlet property="image_yesterday" destination="u4C-fF-xx7" id="hpd-x3-Dak"/>
+                        <outlet property="label_activity" destination="JgZ-4F-ito" id="Z2p-SD-oUF"/>
+                        <outlet property="label_today" destination="6Bx-H3-GA2" id="0sW-Ff-PMu"/>
+                        <outlet property="label_yesterday" destination="CFo-fs-baD" id="E2Z-Rq-kU8"/>
+                        <outlet property="progress_today" destination="TZX-8R-jgi" id="l8s-d0-YIF"/>
+                        <outlet property="progress_yesterday" destination="YgF-uy-Evu" id="iQT-ub-KDv"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yKD-t1-frn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="114" y="134"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="vNB-PK-mQp">
+            <objects>
+                <viewController id="fZ5-26-pV8" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Rmn-VZ-HWl"/>
+                        <viewControllerLayoutGuide type="bottom" id="Nzl-B6-NiR"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="bEi-Tb-wEz">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="UDB-ez-gzf"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IaY-0W-c1f" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="516" y="134"/>
+        </scene>
     </scenes>
     <resources>
-        <image name="steps2" width="50" height="50"/>
-        <image name="still2" width="50" height="50"/>
+        <image name="steps" width="50" height="50"/>
+        <image name="still" width="50" height="50"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
