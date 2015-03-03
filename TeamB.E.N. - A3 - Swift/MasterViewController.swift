@@ -67,8 +67,10 @@ class MasterViewController: UIViewController {
             }
         }
         
+        let startOfToday = cal.dateBySettingHour(0, minute: 0, second: 0, ofDate: NSDate(), options: nil)
+        
         if CMPedometer.isStepCountingAvailable(){
-            self.pedometer.startPedometerUpdatesFromDate(NSDate()) { (pedData: CMPedometerData!, error: NSError!) -> Void in
+            self.pedometer.startPedometerUpdatesFromDate(startOfToday) { (pedData: CMPedometerData!, error: NSError!) -> Void in
                 
                 dispatch_async(dispatch_get_main_queue())
                     {
