@@ -14,6 +14,7 @@ import QuartzCore
 class GameViewController: UIViewController {
     
     @IBOutlet weak var scnView: SCNView!
+    @IBOutlet weak var label_balls: UIButton!
     
     var scene : SCNScene!
     var cameraNode : SCNNode!
@@ -26,12 +27,8 @@ class GameViewController: UIViewController {
     let customQueue = NSOperationQueue()
     
     
-    let numSteps = 100 //Step counter that will be imported from NSUserDefaults
-    
-//    scnView.allowsCameraControl = true
-    
-    var cameraOffsetX:Float = 0.0
-    var cameraOffsetY:Float = 0.0
+    var balls = 0 //Step counter that will be imported from NSUserDefaults
+    var ballNodes: [SCNNode] = []
     
     var rotationOffset:Int = 0
     var direction:Int = 0
@@ -52,7 +49,7 @@ class GameViewController: UIViewController {
         }*/
         
         scnView.autoenablesDefaultLighting = true
-        scnView.allowsCameraControl = true
+//        scnView.allowsCameraControl = true
         
         
         let tapRecognizer = UITapGestureRecognizer(target: self, action: "handleTap:")
@@ -60,14 +57,15 @@ class GameViewController: UIViewController {
         
         motionManager = CMMotionManager()
         motionManager.deviceMotionUpdateInterval = 0.1
+        
         motionManager.startDeviceMotionUpdatesToQueue(NSOperationQueue.currentQueue()) {
             (deviceMotion, error) -> Void in
             
             let accel = deviceMotion.gravity
             
-            let accelX = Float(9.8 * accel.x)
-            let accelY = Float(9.8 * accel.y)
-            let accelZ = Float(9.8 * accel.z)
+            let accelX = Float(0.0)//Float(9.8 * accel.x)
+            let accelY = Float(0.0)//Float(9.8 * accel.y)
+            let accelZ = Float(0.0)//Float(9.8 * accel.z)
             
             self.scene.physicsWorld.gravity = SCNVector3(x: accelX, y: accelY, z: accelZ)
         }
@@ -77,9 +75,22 @@ class GameViewController: UIViewController {
         NSLog("setting down")
     }
     
+    override func viewWillAppear(animated: Bool) {
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let steps_today = defaults.stringForKey("stepToday")
+        {
+            NSLog("today: %@", steps_today)
+            let today = steps_today.toInt()!;
+            
+            balls = today / 100
+        }
+        
+        
+        self.label_balls.setTitle(NSString(format: "Balls: %d", balls), forState: UIControlState.Normal)
+    }
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
         motionManager.startDeviceMotionUpdatesToQueue(NSOperationQueue.currentQueue()) {
             (deviceMotion, error) -> Void in
             
@@ -87,18 +98,34 @@ class GameViewController: UIViewController {
             if(deviceMotion.attitude.pitch < -0.2) {
                 NSLog("direction: %d", self.direction)
                 if(self.direction == 0) {
-                    self.cameraNode.position.y = self.cameraNode.position.y + 0.1
+                    self.cameraNode.position.y = self.cameraNode.position.y + 0.25
                 }
                 else if(self.direction == 1) {
-                    self.cameraNode.position.x = self.cameraNode.position.x + 0.1
+                    self.cameraNode.position.x = self.cameraNode.position.x + 0.25
                 }
                 else if(self.direction == 2) {
-                    self.cameraNode.position.y = self.cameraNode.position.y - 0.1
+                    self.cameraNode.position.y = self.cameraNode.position.y - 0.25
                 }
                 else if(self.direction == 3) {
-                    self.cameraNode.position.x = self.cameraNode.position.x - 0.1
+                    self.cameraNode.position.x = self.cameraNode.position.x - 0.25
                 }
 //                NSLog("x: %f, y: %f, z: %f", self.cameraNode.position.x, self.cameraNode.position.y, self.cameraNode.position.z)
+            }
+            else if(deviceMotion.attitude.pitch > 1.2) {
+                NSLog("direction: %d", self.direction)
+                if(self.direction == 0) {
+                    self.cameraNode.position.y = self.cameraNode.position.y - 0.25
+                }
+                else if(self.direction == 1) {
+                    self.cameraNode.position.x = self.cameraNode.position.x - 0.25
+                }
+                else if(self.direction == 2) {
+                    self.cameraNode.position.y = self.cameraNode.position.y + 0.25
+                }
+                else if(self.direction == 3) {
+                    self.cameraNode.position.x = self.cameraNode.position.x + 0.25
+                }
+                //                NSLog("x: %f, y: %f, z: %f", self.cameraNode.position.x, self.cameraNode.position.y, self.cameraNode.position.z)
             }
             
             if(deviceMotion.attitude.roll < -1 && self.turnLeft) {
@@ -145,13 +172,11 @@ class GameViewController: UIViewController {
         scene.physicsWorld.speed = 1
         
         //Create the sphere
-        setupSphere()
+//        setupSphere()
         
         //Setup camera
-        setupCamera(0.0, offsetY: 0.0)
+        setupCamera()
         
-        //Setup floor
-        //setupFloor()
         setupWall()
         
         scnView.backgroundColor = UIColor.blackColor()
@@ -168,38 +193,31 @@ class GameViewController: UIViewController {
         sphereNode.physicsBody = SCNPhysicsBody.dynamicBody()
         //ball.geometry?.firstMaterial = ballMaterial;
         //sphereNode.physicsBody?.restitution = 2.5
-        sphereNode.position = SCNVector3(x: 15, y: 15, z: 1)
+        if var cam = self.cameraNode?.position {
+            sphereNode.position = SCNVector3(x: cam.x, y: cam.y, z: 0)
+        }
+        else {
+            sphereNode.position = SCNVector3(x: 15, y: 15, z: 0)
+        }
+        
+        sphereNode.physicsBody?.damping = 0.7
+        sphereNode.physicsBody?.rollingFriction = 0.7
         
         scene.rootNode.addChildNode(sphereNode)
+        ballNodes.append(sphereNode)
     }
     
-    func setupCamera(offsetX:Float, offsetY:Float) {
+    func setupCamera() {
         camera = SCNCamera()
         
         cameraNode = SCNNode()
         cameraNode.camera = camera
-        cameraNode.position = SCNVector3(x: 15+offsetX, y: 15+offsetY, z: 10)
+        cameraNode.position = SCNVector3(x: 15, y: 15, z: 15)
         //cameraNode.camera?.yFov = 30
         
         NSLog("camera moved")
         
         scene.rootNode.addChildNode(cameraNode)
-    }
-    
-    func setupFloor() {
-        let floorMaterial = SCNMaterial()
-        floorMaterial.diffuse.contents = UIColor.init(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)
-        
-        let floor = SCNFloor()
-        floor.materials = [floorMaterial]
-        floor.reflectivity = 0.1
-        
-        let floorNode = SCNNode()
-        floorNode.geometry = floor
-        floorNode.physicsBody = SCNPhysicsBody.staticBody()
-        floorNode.position = SCNVector3(x: 0.0, y: 0.0, z: -5)
-        
-        scene.rootNode.addChildNode(floorNode)
     }
     
     func setupWall() {
@@ -271,7 +289,34 @@ class GameViewController: UIViewController {
     }
     
     func handleTap(sender: AnyObject) {
-        setupSphere()
+        var add = true
+        for ball in ballNodes {
+            NSLog("camx: %f, camy: %f, ballx: %f, bally: %f", self.cameraNode.position.x, self.cameraNode.position.y, ball.position.x, ball.position.y)
+            
+            if(abs(ball.position.x - self.cameraNode.position.x) < 4  && abs(ball.position.y - self.cameraNode.position.y) < 4  && abs(ball.position.z - self.cameraNode.position.z) < 17 ) {
+                
+                if(direction == 0) {
+                    ball.physicsBody?.applyForce(SCNVector3Make(0, 25, 0), impulse: false)
+                }
+                else if(direction == 1) {
+                    ball.physicsBody?.applyForce(SCNVector3Make(25, 0, 0), impulse: false)
+                }
+                else if(direction == 2) {
+                    ball.physicsBody?.applyForce(SCNVector3Make(0, -25, 0), impulse: false)
+                }
+                else if(direction == 3) {
+                    ball.physicsBody?.applyForce(SCNVector3Make(-25, 0, 0), impulse: false)
+                }
+                add = false
+            }
+            
+        }
+        if(balls > 0 && add ) {
+            setupSphere()
+            
+            balls -= 1
+            self.label_balls.setTitle(NSString(format: "Balls: %d", balls), forState: UIControlState.Normal)
+        }
     }
 
 }
