@@ -39,6 +39,7 @@ class GoalViewController: UIViewController, UITextFieldDelegate {
         
         NSLog("goals: %@", goal_field.text)
         defaults.setObject(goal_field.text, forKey: "stepGoal")
+        self.view.endEditing(true)
     }
 
     
