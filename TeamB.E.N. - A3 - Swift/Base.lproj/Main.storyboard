@@ -33,7 +33,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" restorationIdentifier="progress_yesterday" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="YgF-uy-Evu">
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" restorationIdentifier="progress_yesterday" trackImage="progress" translatesAutoresizingMaskIntoConstraints="NO" id="YgF-uy-Evu">
                                 <rect key="frame" x="84" y="133" width="200" height="2"/>
                             </progressView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="image_yesterday" image="steps" translatesAutoresizingMaskIntoConstraints="NO" id="u4C-fF-xx7">
@@ -51,7 +51,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" restorationIdentifier="progress_today" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="TZX-8R-jgi">
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" restorationIdentifier="progress_today" translatesAutoresizingMaskIntoConstraints="NO" id="TZX-8R-jgi">
                                 <rect key="frame" x="84" y="200" width="200" height="2"/>
                             </progressView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="image_today" image="steps" translatesAutoresizingMaskIntoConstraints="NO" id="rPL-2B-KCD">
@@ -145,7 +145,6 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="onGoalButtonClick:" destination="7eT-Iq-Bm5" eventType="touchUpInside" id="Z6o-iT-7ls"/>
                                     <segue destination="fZ5-26-pV8" kind="push" id="5st-PX-Fvc"/>
                                 </connections>
                             </button>
@@ -155,6 +154,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="button_reward" destination="JTG-vc-9xF" id="XF9-3L-kJH"/>
                         <outlet property="image_activity" destination="KaU-lL-dig" id="P2w-GL-UaS"/>
                         <outlet property="image_today" destination="rPL-2B-KCD" id="u3e-Xe-ORl"/>
                         <outlet property="image_yesterday" destination="u4C-fF-xx7" id="hpd-x3-Dak"/>
@@ -205,7 +205,23 @@
                             <constraint firstAttribute="centerX" secondItem="0aD-hs-0mE" secondAttribute="centerX" constant="-2" id="med-rL-FJK"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="UDB-ez-gzf"/>
+                    <navigationItem key="navigationItem" id="UDB-ez-gzf">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="EaR-cP-177">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" restorationIdentifier="button_save" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="BDL-Oa-BIo">
+                                <rect key="frame" x="-23" y="-15" width="71" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Save">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="onSaveButtonClick:" destination="fZ5-26-pV8" eventType="touchUpInside" id="6FO-jC-OFq"/>
+                                </connections>
+                            </button>
+                            <connections>
+                                <action selector="onSaveButtonClick:" destination="fZ5-26-pV8" id="aFL-fw-y2R"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="goal_field" destination="0aD-hs-0mE" id="330-kb-CKp"/>
                     </connections>
@@ -216,6 +232,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="progress" width="30" height="30"/>
         <image name="steps" width="50" height="50"/>
         <image name="still" width="50" height="50"/>
     </resources>

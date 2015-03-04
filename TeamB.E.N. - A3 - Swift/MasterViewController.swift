@@ -23,15 +23,37 @@ class MasterViewController: UIViewController {
     @IBOutlet weak var label_activity: UILabel!
     @IBOutlet weak var image_activity: UIImageView!
     
+    @IBOutlet weak var button_reward: UIButton!
+
+    
+    
     //Motion Mngr objs
     let motionManager = CMMotionManager()
     let activityManager = CMMotionActivityManager()
     let customQueue = NSOperationQueue()
     let pedometer = CMPedometer()
     
+    var stepGoal:Int = 0
+    var progress:Float = 0.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        var defaultDict: NSDictionary?
+        if let path = NSBundle.mainBundle().pathForResource("CustomDefaults", ofType: "plist") {
+            defaultDict = NSDictionary(contentsOfFile: path)
+        }
+        if let dict = defaultDict {
+            NSUserDefaults.standardUserDefaults().registerDefaults(dict)
+//            NSLog(dict.description)
+        }
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let goals = defaults.stringForKey("stepGoal")
+        {
+            stepGoal = goals.toInt()!;
+        }
+        
         
         //Date and calendar objs
         let cal = NSCalendar.currentCalendar()
@@ -52,7 +74,10 @@ class MasterViewController: UIViewController {
                     var activityTxt = ""
                     var imageTxt = "still"
                     
-                    if(activity.walking){
+                    if(activity.running){
+                        activityTxt = "Running"
+                        imageTxt = "running"
+                    } else if(activity.walking){
                         activityTxt = "Walking"
                         imageTxt = "walking"
                     } else if (activity.stationary) {
@@ -66,12 +91,15 @@ class MasterViewController: UIViewController {
                         imageTxt = "car"
                     }
                     
+                    NSLog(activity.description)
                     
                     dispatch_async(dispatch_get_main_queue())
                     {
-                            
+                        if(activityTxt != "")
+                        {
                             self.label_activity.text = activityTxt
                             self.image_activity.image = UIImage(named: imageTxt)
+                        }
 
                     }
             }
@@ -84,6 +112,22 @@ class MasterViewController: UIViewController {
                 
                 dispatch_async(dispatch_get_main_queue())
                     {
+                        self.progress = Float(pedData.numberOfSteps.stringValue.toInt()!) / Float(self.stepGoal)
+                        self.progress_today.progress = self.progress
+                        
+                        if(self.progress < 0.5) {
+                            self.image_today.backgroundColor = UIColor.redColor()
+                            self.button_reward.enabled = true
+                        }
+                        else if(self.progress < 1.0) {
+                            self.image_today.backgroundColor = UIColor.yellowColor()
+                            self.button_reward.enabled = false
+                        }
+                        else {
+                            self.image_today.backgroundColor = UIColor.greenColor()
+                            self.button_reward.enabled = true
+                        }
+                        
                         self.label_today.text = pedData.numberOfSteps.stringValue + " steps"
                 }
             }
@@ -92,14 +136,25 @@ class MasterViewController: UIViewController {
                 
                 dispatch_async(dispatch_get_main_queue())
                     {
+                        self.progress = Float(pedData.numberOfSteps.stringValue.toInt()!) / Float(self.stepGoal)
+                        self.progress_yesterday.progress = self.progress
+                        
+                        if(self.progress < 0.5) {
+                            self.image_yesterday.backgroundColor = UIColor.redColor()
+                        }
+                        else if(self.progress < 1.0) {
+                            self.image_yesterday.backgroundColor = UIColor.yellowColor()
+                        }
+                        else {
+                            self.image_yesterday.backgroundColor = UIColor.greenColor()
+                        }
+                        
                         self.label_yesterday.text = pedData.numberOfSteps.stringValue + " steps"
+                        
                 }
             }
         }
         
-    }
-    
-    @IBAction func onGoalButtonClick(sender: UIButton) {
     }
     
     @IBAction func onRewardButtonClick(sender: UIButton) {

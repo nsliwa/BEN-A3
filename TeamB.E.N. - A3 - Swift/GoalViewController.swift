@@ -12,13 +12,32 @@ class GoalViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var goal_field: UITextField!
     
+    let defaults = NSUserDefaults.standardUserDefaults()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         goal_field.delegate = self
+        
+        if let goals = defaults.stringForKey("stepGoal")
+        {
+            NSLog("goals %@", goals)
+            goal_field.text = goals
+        }
 
         // Do any additional setup after loading the view.
     }
+    
+    
+
+    @IBAction func onSaveButtonClick(sender: UIButton) {
+        
+        NSLog("goals: %@", goal_field.text)
+        defaults.setObject(goal_field.text, forKey: "stepGoal")
+    }
+
+    
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
         
@@ -38,5 +57,14 @@ class GoalViewController: UIViewController, UITextFieldDelegate {
         return result
     }
     
+    func textFieldShouldEndEditing(textField: UITextField!) -> Bool {  //delegate method
+        return false
+    }
+    
+    func textFieldShouldReturn(textField: UITextField!) -> Bool {   //delegate method
+        textField.resignFirstResponder()
+        
+        return true
+    }
 
 }
