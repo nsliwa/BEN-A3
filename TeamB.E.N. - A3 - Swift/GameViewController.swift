@@ -14,7 +14,8 @@ import QuartzCore
 class GameViewController: UIViewController {
     
     @IBOutlet weak var scnView: SCNView!
-    let activityManager = CMMotionActivityManager()
+    //let activityManager = CMMotionActivityManager()
+    let motionManager = CMMotionManager()
     let customQueue = NSOperationQueue()
     let scene = SCNScene()
     
@@ -25,12 +26,30 @@ class GameViewController: UIViewController {
         NSLog("loading")
         super.viewDidLoad()
         
-        if CMMotionActivityManager.isActivityAvailable() {
+        /*if CMMotionActivityManager.isActivityAvailable() {
             self.activityManager.startActivityUpdatesToQueue(customQueue) {
                 (activity:CMMotionActivity!) -> Void in
                 NSLog("@", activity.description)
+        
             }
+        }*/
+        
+        let tapRecognizer = UITapGestureRecognizer(target: self, action: "handleTap:")
+        view.gestureRecognizers = [tapRecognizer]
+        
+        motionManager.deviceMotionUpdateInterval = 0.1
+        motionManager.startDeviceMotionUpdatesToQueue(NSOperationQueue.currentQueue()) {
+            (deviceMotion, error) -> Void in
+            
+            let accel = deviceMotion.gravity
+            
+            let accelX = Float(9.8 * accel.x)
+            let accelY = Float(9.8 * accel.y)
+            let accelZ = Float(9.8 * accel.z)
+            
+            self.scene.physicsWorld.gravity = SCNVector3(x: accelX, y: accelY, z: accelZ)
         }
+        
         NSLog("setting up")
         setupWorld()
         NSLog("setting down")
@@ -43,15 +62,17 @@ class GameViewController: UIViewController {
     }
     
     override func viewWillDisappear(animated: Bool) {
-        if CMMotionActivityManager.isActivityAvailable() {
+        /*if CMMotionActivityManager.isActivityAvailable() {
             self.activityManager.stopActivityUpdates()
-        }
+        }*/
         super.viewWillDisappear(animated)
     }
     
     func setupWorld() {
         
-        scene.physicsWorld.speed = 3
+        
+        
+        scene.physicsWorld.speed = 1
         
         //Create the sphere
         setupSphere()
@@ -60,10 +81,11 @@ class GameViewController: UIViewController {
         setupCamera()
         
         //Setup floor
-        setupFloor()
+        //setupFloor()
+        setupWall()
         
         scnView.backgroundColor = UIColor.blackColor()
-        scnView.allowsCameraControl = true
+        //scnView.allowsCameraControl = true
         
         scnView.scene = scene
     }
@@ -74,7 +96,9 @@ class GameViewController: UIViewController {
         
         let sphereNode = SCNNode(geometry: sphereGeometry)
         sphereNode.physicsBody = SCNPhysicsBody.dynamicBody()
-        sphereNode.position = SCNVector3(x: Float(arc4random())/(Float(UINT32_MAX) * 10), y: 10.0, z: 0)
+        //ball.geometry?.firstMaterial = ballMaterial;
+        sphereNode.physicsBody?.restitution = 2.5
+        sphereNode.position = SCNVector3(x: 0, y: 0, z: 0)
         
         scene.rootNode.addChildNode(sphereNode)
     }
@@ -82,9 +106,7 @@ class GameViewController: UIViewController {
     func setupCamera() {
         let cameraNode = SCNNode()
         cameraNode.camera = SCNCamera()
-        cameraNode.camera?.xFov = 50
-        cameraNode.camera?.yFov = 50
-        cameraNode.position = SCNVector3(x: 0, y: 2, z: 15)
+        cameraNode.position = SCNVector3(x: 0, y: 0, z: 30)
         
         scene.rootNode.addChildNode(cameraNode)
     }
@@ -100,8 +122,27 @@ class GameViewController: UIViewController {
         let floorNode = SCNNode()
         floorNode.geometry = floor
         floorNode.physicsBody = SCNPhysicsBody.staticBody()
+        floorNode.position = SCNVector3(x: 0.0, y: 0.0, z: -5)
         
         scene.rootNode.addChildNode(floorNode)
+    }
+    
+    func setupWall() {
+        let wall = SCNPlane(width: 10.0, height: 10.0)
+        wall.firstMaterial?.doubleSided = true
+        wall.firstMaterial?.diffuse.contents = UIColor.redColor() // make it red!!
+        
+        // add the plane to the world as a static body (no dynamic physics)
+        let wallNode = SCNNode()
+        wallNode.geometry = wall
+        wallNode.physicsBody = SCNPhysicsBody.staticBody()
+        wallNode.position = SCNVector3(x: 0.0, y: 0.0, z: -5)
+        
+        scene.rootNode.addChildNode(wallNode)
+    }
+    
+    func handleTap(sender: AnyObject) {
+        setupSphere()
     }
 
 }
