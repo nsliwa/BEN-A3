@@ -16,6 +16,7 @@ class GameViewController: UIViewController {
     @IBOutlet weak var scnView: SCNView!
     let activityManager = CMMotionActivityManager()
     let customQueue = NSOperationQueue()
+    let scene = SCNScene()
     
     let numSteps = 100 //Step counter that will be imported from NSUserDefaults
     
@@ -50,16 +51,57 @@ class GameViewController: UIViewController {
     
     func setupWorld() {
         
-        NSLog("setting view")
-        let scene = SCNScene()
+        scene.physicsWorld.speed = 3
         
-        NSLog("done setting view") 
+        //Create the sphere
+        setupSphere()
         
-        let boxGeometry = SCNBox(width: 10.0, height: 10.0, length: 10.0, chamferRadius: 1.0)
-        let boxNode = SCNNode(geometry: boxGeometry)
-        scene.rootNode.addChildNode(boxNode)
+        //Setup camera
+        setupCamera()
+        
+        //Setup floor
+        setupFloor()
+        
+        scnView.backgroundColor = UIColor.blackColor()
+        scnView.allowsCameraControl = true
         
         scnView.scene = scene
+    }
+    
+    func setupSphere() {
+        let sphereGeometry = SCNSphere(radius: 1.0)
+        sphereGeometry.segmentCount = 128
+        
+        let sphereNode = SCNNode(geometry: sphereGeometry)
+        sphereNode.physicsBody = SCNPhysicsBody.dynamicBody()
+        sphereNode.position = SCNVector3(x: Float(arc4random())/(Float(UINT32_MAX) * 10), y: 10.0, z: 0)
+        
+        scene.rootNode.addChildNode(sphereNode)
+    }
+    
+    func setupCamera() {
+        let cameraNode = SCNNode()
+        cameraNode.camera = SCNCamera()
+        cameraNode.camera?.xFov = 50
+        cameraNode.camera?.yFov = 50
+        cameraNode.position = SCNVector3(x: 0, y: 2, z: 15)
+        
+        scene.rootNode.addChildNode(cameraNode)
+    }
+    
+    func setupFloor() {
+        let floorMaterial = SCNMaterial()
+        floorMaterial.diffuse.contents = UIColor.init(red: 0.4, green: 0.4, blue: 0.4, alpha: 1)
+        
+        let floor = SCNFloor()
+        floor.materials = [floorMaterial]
+        floor.reflectivity = 0.1
+        
+        let floorNode = SCNNode()
+        floorNode.geometry = floor
+        floorNode.physicsBody = SCNPhysicsBody.staticBody()
+        
+        scene.rootNode.addChildNode(floorNode)
     }
 
 }
