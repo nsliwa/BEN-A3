@@ -33,12 +33,21 @@ class MasterViewController: UIViewController {
     let customQueue = NSOperationQueue()
     let pedometer = CMPedometer()
     
-    var stepGoal:Int = 0
-    var progress:Float = 0.0
+    //var stepGoal:Int = 0
+    //var progress:Float = 0.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         
+        NSLog("View did load in master")
+        
+        var yesterday:Int = 0
+        var today:Int = 0
+        var stepGoal:Int = 1
         var defaultDict: NSDictionary?
         if let path = NSBundle.mainBundle().pathForResource("CustomDefaults", ofType: "plist") {
             defaultDict = NSDictionary(contentsOfFile: path)
@@ -49,11 +58,24 @@ class MasterViewController: UIViewController {
         }
         
         let defaults = NSUserDefaults.standardUserDefaults()
-        if let goals = defaults.stringForKey("stepGoal")
+        if let steps_yesterday = defaults.stringForKey("stepYesterday")
         {
-            stepGoal = goals.toInt()!;
+            NSLog("yesterday: %@", steps_yesterday)
+            yesterday = steps_yesterday.toInt()!;
+        }
+        if let steps_today = defaults.stringForKey("stepToday")
+        {
+            NSLog("today: %@", steps_today)
+            today = steps_today.toInt()!;
+        }
+        if let goal = defaults.stringForKey("stepGoal")
+        {
+            NSLog("goal: %@", goal)
+            stepGoal = goal.toInt()!;
         }
         
+        self.progress_yesterday.progress = Float(yesterday) / Float(stepGoal)
+        self.progress_today.progress = Float(today) / Float(stepGoal)
         
         //Date and calendar objs
         let cal = NSCalendar.currentCalendar()
@@ -110,16 +132,28 @@ class MasterViewController: UIViewController {
         if CMPedometer.isStepCountingAvailable(){
             self.pedometer.startPedometerUpdatesFromDate(startOfToday) { (pedData: CMPedometerData!, error: NSError!) -> Void in
                 
+                let defaults = NSUserDefaults.standardUserDefaults()
+                var stepGoal = 1
+                if let goals = defaults.stringForKey("stepGoal")
+                {
+                    NSLog("goals %@", goals)
+                    stepGoal = goals.toInt()!
+                }
+                
+                defaults.setObject(pedData.numberOfSteps.stringValue, forKey: "stepToday")
+                
+                var progress = Float(pedData.numberOfSteps.stringValue.toInt()!) / Float(stepGoal)
+                NSLog("progress %f", progress)
                 dispatch_async(dispatch_get_main_queue())
                     {
-                        self.progress = Float(pedData.numberOfSteps.stringValue.toInt()!) / Float(self.stepGoal)
-                        self.progress_today.progress = self.progress
+                        self.progress_today.progress = progress
+                        NSLog("goal1: %d", stepGoal)
                         
-                        if(self.progress < 0.5) {
+                        if(progress < 0.5) {
                             self.image_today.backgroundColor = UIColor.redColor()
                             self.button_reward.enabled = true
                         }
-                        else if(self.progress < 1.0) {
+                        else if(progress < 1.0) {
                             self.image_today.backgroundColor = UIColor.yellowColor()
                             self.button_reward.enabled = false
                         }
@@ -134,15 +168,27 @@ class MasterViewController: UIViewController {
             
             self.pedometer.queryPedometerDataFromDate(startOfYesterday, toDate: endOfYesterday) { (pedData: CMPedometerData!, error: NSError!) -> Void in
                 
+                let defaults = NSUserDefaults.standardUserDefaults()
+                var stepGoal = 1
+                if let goals = defaults.stringForKey("stepGoal")
+                {
+                    NSLog("goals %@", goals)
+                    stepGoal = goals.toInt()!
+                }
+                
+                defaults.setObject(pedData.numberOfSteps.stringValue, forKey: "stepYesterday")
+                
+                var progress = Float(pedData.numberOfSteps.stringValue.toInt()!) / Float(stepGoal)
+                NSLog("progress %f", progress)
                 dispatch_async(dispatch_get_main_queue())
                     {
-                        self.progress = Float(pedData.numberOfSteps.stringValue.toInt()!) / Float(self.stepGoal)
-                        self.progress_yesterday.progress = self.progress
+                        self.progress_yesterday.progress = progress
+                        NSLog("goal: %d", stepGoal)
                         
-                        if(self.progress < 0.5) {
+                        if(progress < 0.5) {
                             self.image_yesterday.backgroundColor = UIColor.redColor()
                         }
-                        else if(self.progress < 1.0) {
+                        else if(progress < 1.0) {
                             self.image_yesterday.backgroundColor = UIColor.yellowColor()
                         }
                         else {
@@ -165,6 +211,13 @@ class MasterViewController: UIViewController {
         self.navigationController?.pushViewController(controller as GameViewController, animated: true)
         
         NSLog("segue")
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        if CMMotionActivityManager.isActivityAvailable() {
+            self.activityManager.stopActivityUpdates()
+        }
+        super.viewWillDisappear(animated)
     }
     
 

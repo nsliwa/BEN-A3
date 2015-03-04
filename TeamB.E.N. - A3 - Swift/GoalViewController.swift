@@ -18,7 +18,11 @@ class GoalViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NSLog("view did load in goals")
+        
         goal_field.delegate = self
+//        goal_field.returnKeyType = UIReturnKeyType
+//        goal_field.becomeFirstResponder()
         
         if let goals = defaults.stringForKey("stepGoal")
         {
@@ -54,17 +58,28 @@ class GoalViewController: UIViewController, UITextFieldDelegate {
             }
         }
         
+        NSLog("change char")
+        
         return result
     }
     
     func textFieldShouldEndEditing(textField: UITextField!) -> Bool {  //delegate method
-        return false
+        NSLog("end editing")
+        textField.resignFirstResponder()
+        return true
     }
     
     func textFieldShouldReturn(textField: UITextField!) -> Bool {   //delegate method
         textField.resignFirstResponder()
         
+        NSLog("should return")
+        
         return true
+    }
+    
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        NSLog("touches began")
+        self.view.endEditing(true)
     }
 
 }
