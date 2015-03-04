@@ -13,8 +13,6 @@ import QuartzCore
 
 class GameViewController: UIViewController {
     
-    @IBOutlet weak var scnView : SCNView!
-    
     let activityManager = CMMotionActivityManager()
     let customQueue = NSOperationQueue()
     
@@ -29,12 +27,14 @@ class GameViewController: UIViewController {
                 NSLog("@", activity.description)
             }
         }
+        
+        setupWorld()
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         
-        setupWorld()
+        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -45,13 +45,15 @@ class GameViewController: UIViewController {
     }
     
     func setupWorld() {
+        
+        let scnView = self.view as SCNView
         let scene = SCNScene()
+        scnView.scene = scene
         
         let boxGeometry = SCNBox(width: 10.0, height: 10.0, length: 10.0, chamferRadius: 1.0)
         let boxNode = SCNNode(geometry: boxGeometry)
         scene.rootNode.addChildNode(boxNode)
         
-        scnView.scene = scene
     }
 
 }

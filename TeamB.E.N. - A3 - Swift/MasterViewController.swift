@@ -158,6 +158,10 @@ class MasterViewController: UIViewController {
     }
     
     @IBAction func onRewardButtonClick(sender: UIButton) {
+        let storyboard = UIStoryboard(name: "ModuleB_Game", bundle: nil)
+        let controller: AnyObject! = storyboard.instantiateViewControllerWithIdentifier("GameViewController") as GameViewController
+        
+        self.navigationController?.pushViewController(controller as GameViewController, animated: true)
     }
     
 
