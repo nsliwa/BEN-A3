@@ -54,7 +54,12 @@ class GameViewController: UIViewController {
         
         
         let tapRecognizer = UITapGestureRecognizer(target: self, action: "handleTap:")
-        view.gestureRecognizers = [tapRecognizer]
+        let doubleTapRecognizer = UITapGestureRecognizer(target: self, action: "handleDoubleTap:")
+        tapRecognizer.numberOfTapsRequired = 1
+        doubleTapRecognizer.numberOfTapsRequired = 2
+        
+        
+        view.gestureRecognizers = [tapRecognizer, doubleTapRecognizer]
         
         motionManager = CMMotionManager()
         motionManager.deviceMotionUpdateInterval = 0.1
@@ -62,11 +67,11 @@ class GameViewController: UIViewController {
         motionManager.startDeviceMotionUpdatesToQueue(NSOperationQueue.currentQueue()) {
             (deviceMotion, error) -> Void in
             
-            let accel = deviceMotion.gravity
+            //let accel = deviceMotion.gravity
             
-            let accelX = Float(9.8 * accel.x)
-            let accelY = Float(9.8 * accel.y)
-            let accelZ = Float(9.8 * accel.z)
+            let accelX = Float(0)
+            let accelY = Float(0)
+            let accelZ = Float(9.8)
             
             self.scene.physicsWorld.gravity = SCNVector3(x: accelX, y: accelY, z: accelZ)
         }
@@ -196,10 +201,10 @@ class GameViewController: UIViewController {
         //ball.geometry?.firstMaterial = ballMaterial;
         //sphereNode.physicsBody?.restitution = 2.5
         if var cam = self.cameraNode?.position {
-            sphereNode.position = SCNVector3(x: cam.x, y: cam.y, z: 0)
+            sphereNode.position = SCNVector3(x: cam.x, y: cam.y, z: 2)
         }
         else {
-            sphereNode.position = SCNVector3(x: 15, y: 15, z: 0)
+            sphereNode.position = SCNVector3(x: 15, y: 15, z: 2)
         }
         
         sphereNode.physicsBody?.damping = 0.7
@@ -294,42 +299,35 @@ class GameViewController: UIViewController {
     }
     
     func handleTap(sender: AnyObject) {
-        var add = true
+        
         for ball in self.ballNodes {
-            NSLog("x: %f vs %f, y: %f vs %f, z: %f vs %f", self.cameraNode.position.x, ball.position.x, self.cameraNode.position.y, ball.position.y, self.cameraNode.position.z, ball.position.z)
             
-            ball.physicsBody = SCNPhysicsBody.dynamicBody()
-            
-            if(abs(ball.position.x - self.cameraNode.position.x) < 4  && abs(ball.position.y - self.cameraNode.position.y) < 4  && abs(ball.position.z - self.cameraNode.position.z) < 17 ) {
-                
-                if(self.direction == 0) {
-                    //ball.physicsBody?.applyForce(SCNVector3Make(0, 5, 0), impulse: true)
-                    //ball.position.y += 0.1
-                    
-                    ball.physicsBody?.applyForce(SCNVector3Make(0, 5, 0), atPosition: ball.position, impulse: true)
-                }
-                else if(self.direction == 1) {
-                    ball.physicsBody?.applyForce(SCNVector3Make(5, 0, 0), impulse: true)
-                    //ball.position.x += 0.1
-                }
-                else if(self.direction == 2) {
-                    ball.physicsBody?.applyForce(SCNVector3Make(0, -5, 0), impulse: true)
-                    //ball.position.y -= 0.1
-                }
-                else if(self.direction == 3) {
-                    ball.physicsBody?.applyForce(SCNVector3Make(-5, 0, 0), impulse: true)
-                    //ball.position.x -= 0.1
-                }
-                add = false
+            if(self.direction == 0) {
+                ball.physicsBody?.applyForce(SCNVector3Make(0, 25, 0), impulse: true)
+            }
+            else if(self.direction == 1) {
+                ball.physicsBody?.applyForce(SCNVector3Make(25, 0, 0), impulse: true)
+            }
+            else if(self.direction == 2) {
+                ball.physicsBody?.applyForce(SCNVector3Make(0, -25, 0), impulse: true)
+            }
+            else if(self.direction == 3) {
+                ball.physicsBody?.applyForce(SCNVector3Make(-25, 0, 0), impulse: true)
             }
             
         }
-        if(self.balls > 0 && add ) {
+        
+    }
+    
+    func handleDoubleTap(sender: AnyObject) {
+        
+        if(self.balls > 0) {
             setupSphere()
             
             self.balls -= 1
             self.label_balls.setTitle(NSString(format: "Balls: %d", balls), forState: UIControlState.Normal)
         }
+        
     }
 
 }
