@@ -13,12 +13,15 @@ import QuartzCore
 
 class GameViewController: UIViewController {
     
+    @IBOutlet weak var scnView: SCNView!
     let activityManager = CMMotionActivityManager()
     let customQueue = NSOperationQueue()
     
     let numSteps = 100 //Step counter that will be imported from NSUserDefaults
     
     override func viewDidLoad() {
+        
+        NSLog("loading")
         super.viewDidLoad()
         
         if CMMotionActivityManager.isActivityAvailable() {
@@ -27,8 +30,9 @@ class GameViewController: UIViewController {
                 NSLog("@", activity.description)
             }
         }
-        
+        NSLog("setting up")
         setupWorld()
+        NSLog("setting down")
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -46,14 +50,16 @@ class GameViewController: UIViewController {
     
     func setupWorld() {
         
-        let scnView = self.view as SCNView
+        NSLog("setting view")
         let scene = SCNScene()
-        scnView.scene = scene
+        
+        NSLog("done setting view") 
         
         let boxGeometry = SCNBox(width: 10.0, height: 10.0, length: 10.0, chamferRadius: 1.0)
         let boxNode = SCNNode(geometry: boxGeometry)
         scene.rootNode.addChildNode(boxNode)
         
+        scnView.scene = scene
     }
 
 }
