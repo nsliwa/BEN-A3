@@ -22,6 +22,11 @@ class GameViewController: UIViewController {
     var wallNode: SCNNode!
     var motionManager : CMMotionManager!
     
+    var westNode : SCNNode!
+    var eastNode : SCNNode!
+    var northNode : SCNNode!
+    var southNode : SCNNode!
+    
     
     //let activityManager = CMMotionActivityManager()
     let customQueue = NSOperationQueue()
@@ -156,7 +161,6 @@ class GameViewController: UIViewController {
             }
         }
         
-        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -168,9 +172,9 @@ class GameViewController: UIViewController {
     
     func setupWorld() {
         
-        
         scene = SCNScene()
         scene.physicsWorld
+
         scene.physicsWorld.speed = 1
         
         //Create the sphere
@@ -182,9 +186,37 @@ class GameViewController: UIViewController {
         setupWall()
         
         scnView.backgroundColor = UIColor.blackColor()
-        //scnView.allowsCameraControl = true
+        scnView.allowsCameraControl = true
+        
+        let southWall = SCNBox(width: 30.0, height: 1.0, length: 30.0, chamferRadius: 1.0)
+        southNode = SCNNode(geometry: southWall)
+        southNode.physicsBody = SCNPhysicsBody.staticBody()
+        southNode.position = SCNVector3(x: 10.0, y: -5.0, z: 15.0)
+        scene.rootNode.addChildNode(southNode)
+        
+        let northWall = SCNBox(width: 30.0, height: 1.0, length: 30.0, chamferRadius: 1.0)
+        northNode = SCNNode(geometry: northWall)
+        northNode.physicsBody = SCNPhysicsBody.staticBody()
+        northNode.position = SCNVector3(x: 10.0, y: 25.0, z: 15.0)
+        scene.rootNode.addChildNode(northNode)
+        
+        let eastWall = SCNBox(width: 1.0, height: 30.0, length: 30.0, chamferRadius: 1.0)
+        eastNode = SCNNode(geometry: eastWall)
+        eastNode.physicsBody = SCNPhysicsBody.staticBody()
+        eastNode.position = SCNVector3(x: 25.0, y: 10.0, z: 15.0)
+        scene.rootNode.addChildNode(eastNode)
+        
+        let westWall = SCNBox(width: 1.0, height: 30.0, length: 30.0, chamferRadius: 1.0)
+        westNode = SCNNode(geometry: westWall)
+        westNode.physicsBody = SCNPhysicsBody.staticBody()
+        westNode.position = SCNVector3(x: -5.0, y: 10.0, z: 15.0)
+        scene.rootNode.addChildNode(westNode)
         
         scnView.scene = self.scene
+
+        scnView.scene = scene
+        
+
     }
     
     func setupSphere() {
@@ -202,8 +234,9 @@ class GameViewController: UIViewController {
             sphereNode.position = SCNVector3(x: 15, y: 15, z: 0)
         }
         
-        sphereNode.physicsBody?.damping = 0.7
-        sphereNode.physicsBody?.rollingFriction = 0.7
+        sphereNode.physicsBody?.damping = 0.4
+        sphereNode.physicsBody?.rollingFriction = 0.4
+        sphereNode.physicsBody?.restitution = 0.9
         sphereNode.name = "ball"
         
         self.scene.rootNode.addChildNode(sphereNode)
@@ -217,7 +250,7 @@ class GameViewController: UIViewController {
         
         cameraNode = SCNNode()
         cameraNode.camera = camera
-        cameraNode.position = SCNVector3(x: 15, y: 15, z: 15)
+        cameraNode.position = SCNVector3(x: 15, y: 15, z: 20)
         //cameraNode.camera?.yFov = 30
         
         NSLog("camera moved")
@@ -233,6 +266,7 @@ class GameViewController: UIViewController {
         let whiteTile = SCNPlane(width: 10.0, height: 10.0)
         whiteTile.firstMaterial?.doubleSided = true
         whiteTile.firstMaterial?.diffuse.contents = UIColor.whiteColor()
+
         
         var redNode1 = SCNNode()
         redNode1.geometry = redTile
@@ -291,6 +325,20 @@ class GameViewController: UIViewController {
         self.scene.rootNode.addChildNode(whiteNode4)
         
         
+        
+        /*var wall1 = SCNNode()
+        wall1.geometry = verticalWall
+        wall1.physicsBody = SCNPhysicsBody.staticBody()
+        wall1.position = SCNVector3(x: 0.0, y: 30.0, z: 10.0)
+        self.scene.rootNode.addChildNode(wall1)
+        
+        var wall2 = SCNNode()
+        wall2.geometry = verticalWall
+        wall2.physicsBody = SCNPhysicsBody.staticBody()
+        wall2.position = SCNVector3(x: 0.0, y: 0.0, z: 10.0)
+        self.scene.rootNode.addChildNode(wall2)*/
+        
+        
     }
     
     func handleTap(sender: AnyObject) {
@@ -306,18 +354,18 @@ class GameViewController: UIViewController {
                     //ball.physicsBody?.applyForce(SCNVector3Make(0, 5, 0), impulse: true)
                     //ball.position.y += 0.1
                     
-                    ball.physicsBody?.applyForce(SCNVector3Make(0, 5, 0), atPosition: ball.position, impulse: true)
+                    ball.physicsBody?.applyForce(SCNVector3Make(0, 25, 0), atPosition: ball.position, impulse: true)
                 }
                 else if(self.direction == 1) {
-                    ball.physicsBody?.applyForce(SCNVector3Make(5, 0, 0), impulse: true)
+                    ball.physicsBody?.applyForce(SCNVector3Make(25, 0, 0), impulse: true)
                     //ball.position.x += 0.1
                 }
                 else if(self.direction == 2) {
-                    ball.physicsBody?.applyForce(SCNVector3Make(0, -5, 0), impulse: true)
+                    ball.physicsBody?.applyForce(SCNVector3Make(0, -25, 0), impulse: true)
                     //ball.position.y -= 0.1
                 }
                 else if(self.direction == 3) {
-                    ball.physicsBody?.applyForce(SCNVector3Make(-5, 0, 0), impulse: true)
+                    ball.physicsBody?.applyForce(SCNVector3Make(-25, 0, 0), impulse: true)
                     //ball.position.x -= 0.1
                 }
                 add = false
