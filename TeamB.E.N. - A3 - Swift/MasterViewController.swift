@@ -107,7 +107,7 @@ class MasterViewController: UIViewController {
                         imageTxt = "still"
                     } else if (activity.cycling){
                         activityTxt = "Cycling"
-                        imageTxt = "cycling"
+                        imageTxt = "You are biking. Stop looking at the screen."
                     } else if (activity.automotive) {
                         activityTxt = "You are in a car. Lazy."
                         imageTxt = "car"
@@ -151,7 +151,7 @@ class MasterViewController: UIViewController {
                         
                         if(progress < 0.5) {
                             self.image_today.backgroundColor = UIColor.redColor()
-                            self.button_reward.enabled = true
+                            self.button_reward.enabled = false
                         }
                         else if(progress < 1.0) {
                             self.image_today.backgroundColor = UIColor.yellowColor()

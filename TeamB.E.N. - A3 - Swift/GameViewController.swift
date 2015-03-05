@@ -26,7 +26,17 @@ class GameViewController: UIViewController {
     var eastNode : SCNNode!
     var northNode : SCNNode!
     var southNode : SCNNode!
+    var ceilingNode : SCNNode!
     
+    @IBAction func onButtonExploreClick(sender: UIButton) {
+        if( scnView.allowsCameraControl == true) {
+            scnView.allowsCameraControl = false
+            //cameraNode.position = SCNVector3(x: 15, y: 15, z: 27)
+        }
+        else if (scnView.allowsCameraControl == false) {
+            scnView.allowsCameraControl = true
+        }
+    }
     
     //let activityManager = CMMotionActivityManager()
     let customQueue = NSOperationQueue()
@@ -55,7 +65,6 @@ class GameViewController: UIViewController {
         }*/
         
         scnView.autoenablesDefaultLighting = true
-//        scnView.allowsCameraControl = true
         
         
         let tapRecognizer = UITapGestureRecognizer(target: self, action: "handleTap:")
@@ -72,11 +81,11 @@ class GameViewController: UIViewController {
         motionManager.startDeviceMotionUpdatesToQueue(NSOperationQueue.currentQueue()) {
             (deviceMotion, error) -> Void in
             
-            //let accel = deviceMotion.gravity
+            let accel = deviceMotion.gravity
             
-            let accelX = Float(0)
-            let accelY = Float(0)
-            let accelZ = Float(9.8)
+            let accelX = Float(9.8 * accel.x)
+            let accelY = Float(9.8 * accel.y)
+            let accelZ = Float(-9.8)
             
             self.scene.physicsWorld.gravity = SCNVector3(x: accelX, y: accelY, z: accelZ)
         }
@@ -108,33 +117,33 @@ class GameViewController: UIViewController {
 //            NSLog(deviceMotion.attitude.pitch.description)
             if(deviceMotion.attitude.pitch < -0.2) {
                 NSLog("direction: %d", self.direction)
-                if(self.direction == 0) {
-                    self.cameraNode.position.y = self.cameraNode.position.y + 0.25
+                if(self.direction == 0 && self.cameraNode.position.y < 20) {
+                    self.cameraNode.position.y = self.cameraNode.position.y + 0.6
                 }
-                else if(self.direction == 1) {
-                    self.cameraNode.position.x = self.cameraNode.position.x + 0.25
+                else if(self.direction == 1 && self.cameraNode.position.x < 20) {
+                    self.cameraNode.position.x = self.cameraNode.position.x + 0.6
                 }
-                else if(self.direction == 2) {
-                    self.cameraNode.position.y = self.cameraNode.position.y - 0.25
+                else if(self.direction == 2 && self.cameraNode.position.y > 0) {
+                    self.cameraNode.position.y = self.cameraNode.position.y - 0.6
                 }
-                else if(self.direction == 3) {
-                    self.cameraNode.position.x = self.cameraNode.position.x - 0.25
+                else if(self.direction == 3 && self.cameraNode.position.x > 0) {
+                    self.cameraNode.position.x = self.cameraNode.position.x - 0.6
                 }
-//                NSLog("x: %f, y: %f, z: %f", self.cameraNode.position.x, self.cameraNode.position.y, self.cameraNode.position.z)
+                NSLog("x: %f, y: %f, z: %f", self.cameraNode.position.x, self.cameraNode.position.y, self.cameraNode.position.z)
             }
             else if(deviceMotion.attitude.pitch > 1.2) {
                 NSLog("direction: %d", self.direction)
-                if(self.direction == 0) {
-                    self.cameraNode.position.y = self.cameraNode.position.y - 0.25
+                if(self.direction == 0 && self.cameraNode.position.y > 0) {
+                    self.cameraNode.position.y = self.cameraNode.position.y - 0.6
                 }
-                else if(self.direction == 1) {
-                    self.cameraNode.position.x = self.cameraNode.position.x - 0.25
+                else if(self.direction == 1 && self.cameraNode.position.x > 0) {
+                    self.cameraNode.position.x = self.cameraNode.position.x - 0.6
                 }
-                else if(self.direction == 2) {
-                    self.cameraNode.position.y = self.cameraNode.position.y + 0.25
+                else if(self.direction == 2 && self.cameraNode.position.y < 20) {
+                    self.cameraNode.position.y = self.cameraNode.position.y + 0.6
                 }
-                else if(self.direction == 3) {
-                    self.cameraNode.position.x = self.cameraNode.position.x + 0.25
+                else if(self.direction == 3 && self.cameraNode.position.x < 20) {
+                    self.cameraNode.position.x = self.cameraNode.position.x + 0.6
                 }
                 //                NSLog("x: %f, y: %f, z: %f", self.cameraNode.position.x, self.cameraNode.position.y, self.cameraNode.position.z)
             }
@@ -191,31 +200,41 @@ class GameViewController: UIViewController {
         setupWall()
         
         scnView.backgroundColor = UIColor.blackColor()
-        scnView.allowsCameraControl = true
+        //scnView.allowsCameraControl = true
         
-        let southWall = SCNBox(width: 30.0, height: 1.0, length: 30.0, chamferRadius: 1.0)
+        let southWall = SCNBox(width: 30.0, height: 1.0, length: 30.0, chamferRadius: 0.0)
+        southWall.firstMaterial?.diffuse.contents = UIColor.blueColor()
         southNode = SCNNode(geometry: southWall)
         southNode.physicsBody = SCNPhysicsBody.staticBody()
         southNode.position = SCNVector3(x: 10.0, y: -5.0, z: 15.0)
         scene.rootNode.addChildNode(southNode)
         
-        let northWall = SCNBox(width: 30.0, height: 1.0, length: 30.0, chamferRadius: 1.0)
+        let northWall = SCNBox(width: 30.0, height: 1.0, length: 30.0, chamferRadius: 0.0)
+        northWall.firstMaterial?.diffuse.contents = UIColor.greenColor()
         northNode = SCNNode(geometry: northWall)
         northNode.physicsBody = SCNPhysicsBody.staticBody()
         northNode.position = SCNVector3(x: 10.0, y: 25.0, z: 15.0)
         scene.rootNode.addChildNode(northNode)
         
-        let eastWall = SCNBox(width: 1.0, height: 30.0, length: 30.0, chamferRadius: 1.0)
+        let eastWall = SCNBox(width: 1.0, height: 30.0, length: 30.0, chamferRadius: 0.0)
+        eastWall.firstMaterial?.diffuse.contents = UIColor.yellowColor()
         eastNode = SCNNode(geometry: eastWall)
         eastNode.physicsBody = SCNPhysicsBody.staticBody()
         eastNode.position = SCNVector3(x: 25.0, y: 10.0, z: 15.0)
         scene.rootNode.addChildNode(eastNode)
         
-        let westWall = SCNBox(width: 1.0, height: 30.0, length: 30.0, chamferRadius: 1.0)
+        let westWall = SCNBox(width: 1.0, height: 30.0, length: 30.0, chamferRadius: 0.0)
+        westWall.firstMaterial?.diffuse.contents = UIColor.orangeColor()
         westNode = SCNNode(geometry: westWall)
         westNode.physicsBody = SCNPhysicsBody.staticBody()
         westNode.position = SCNVector3(x: -5.0, y: 10.0, z: 15.0)
         scene.rootNode.addChildNode(westNode)
+        
+        let ceilingWall = SCNBox(width: 30.0, height: 30.0, length: 1.0, chamferRadius: 0.0)
+        ceilingNode = SCNNode(geometry: ceilingWall)
+        ceilingNode.physicsBody = SCNPhysicsBody.staticBody()
+        ceilingNode.position = SCNVector3(x: 10.0, y: 10.0, z: 30.0)
+        scene.rootNode.addChildNode(ceilingNode)
         
         scnView.scene = self.scene
 
@@ -233,15 +252,15 @@ class GameViewController: UIViewController {
         //ball.geometry?.firstMaterial = ballMaterial;
         //sphereNode.physicsBody?.restitution = 2.5
         if var cam = self.cameraNode?.position {
-            sphereNode.position = SCNVector3(x: cam.x, y: cam.y, z: 2)
+            sphereNode.position = SCNVector3(x: cam.x, y: cam.y, z: 5)
         }
         else {
-            sphereNode.position = SCNVector3(x: 15, y: 15, z: 2)
+            sphereNode.position = SCNVector3(x: 15, y: 15, z: 5)
         }
         
-        sphereNode.physicsBody?.damping = 0.4
-        sphereNode.physicsBody?.rollingFriction = 0.4
-        sphereNode.physicsBody?.restitution = 0.9
+        sphereNode.physicsBody?.damping = 0.1
+        sphereNode.physicsBody?.rollingFriction = 0.1
+        sphereNode.physicsBody?.restitution = 2.0
         sphereNode.name = "ball"
         
         self.scene.rootNode.addChildNode(sphereNode)
@@ -255,7 +274,7 @@ class GameViewController: UIViewController {
         
         cameraNode = SCNNode()
         cameraNode.camera = camera
-        cameraNode.position = SCNVector3(x: 15, y: 15, z: 20)
+        cameraNode.position = SCNVector3(x: 15, y: 15, z: 27)
         //cameraNode.camera?.yFov = 30
         
         NSLog("camera moved")
@@ -329,69 +348,29 @@ class GameViewController: UIViewController {
         whiteNode4.position = SCNVector3(x: 20.0, y: 10.0, z: 0.0)
         self.scene.rootNode.addChildNode(whiteNode4)
         
-        
-        
-        /*var wall1 = SCNNode()
-        wall1.geometry = verticalWall
-        wall1.physicsBody = SCNPhysicsBody.staticBody()
-        wall1.position = SCNVector3(x: 0.0, y: 30.0, z: 10.0)
-        self.scene.rootNode.addChildNode(wall1)
-        
-        var wall2 = SCNNode()
-        wall2.geometry = verticalWall
-        wall2.physicsBody = SCNPhysicsBody.staticBody()
-        wall2.position = SCNVector3(x: 0.0, y: 0.0, z: 10.0)
-        self.scene.rootNode.addChildNode(wall2)*/
-        
-        
     }
     
     func handleTap(sender: AnyObject) {
         for ball in self.ballNodes {
             if(self.direction == 0) {
-                ball.physicsBody?.applyForce(SCNVector3Make(0, 25, 0), impulse: true)
+                ball.physicsBody?.applyForce(SCNVector3Make(0, 30, 0), impulse: true)
             }
             else if(self.direction == 1) {
-                ball.physicsBody?.applyForce(SCNVector3Make(25, 0, 0), impulse: true)
+                ball.physicsBody?.applyForce(SCNVector3Make(30, 0, 0), impulse: true)
             }
             else if(self.direction == 2) {
-                ball.physicsBody?.applyForce(SCNVector3Make(0, -25, 0), impulse: true)
+                ball.physicsBody?.applyForce(SCNVector3Make(0, -30, 0), impulse: true)
             }
             else if(self.direction == 3) {
-                ball.physicsBody?.applyForce(SCNVector3Make(-25, 0, 0), impulse: true)
-
-//            ball.physicsBody = SCNPhysicsBody.dynamicBody()
-//            
-//            if(abs(ball.position.x - self.cameraNode.position.x) < 4  && abs(ball.position.y - self.cameraNode.position.y) < 4  && abs(ball.position.z - self.cameraNode.position.z) < 17 ) {
-//                
-//                if(self.direction == 0) {
-//                    //ball.physicsBody?.applyForce(SCNVector3Make(0, 5, 0), impulse: true)
-//                    //ball.position.y += 0.1
-//                    
-//                    ball.physicsBody?.applyForce(SCNVector3Make(0, 25, 0), atPosition: ball.position, impulse: true)
-//                }
-//                else if(self.direction == 1) {
-//                    ball.physicsBody?.applyForce(SCNVector3Make(25, 0, 0), impulse: true)
-//                    //ball.position.x += 0.1
-//                }
-//                else if(self.direction == 2) {
-//                    ball.physicsBody?.applyForce(SCNVector3Make(0, -25, 0), impulse: true)
-//                    //ball.position.y -= 0.1
-//                }
-//                else if(self.direction == 3) {
-//                    ball.physicsBody?.applyForce(SCNVector3Make(-25, 0, 0), impulse: true)
-//                    //ball.position.x -= 0.1
-//                }
-//                add = false
+                ball.physicsBody?.applyForce(SCNVector3Make(-30, 0, 0), impulse: true)
 
             }
             
         }
-        
     }
     
     func handleDoubleTap(sender: AnyObject) {
-        
+        NSLog("dbl")
         if(self.balls > 0) {
             setupSphere()
             
